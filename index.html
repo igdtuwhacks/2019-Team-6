@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather Station</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <style>
+        #hero-bg {
+            background-image: url("https://img.wallpapersafari.com/desktop/1680/1050/31/46/GgyrPf.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        #hero-bg-filter {
+            background-color: rgba(0,0,0,0.2);
+        }
+        #table-bg {
+            background-color: rgba(0,0,0,0);
+            color: white;
+        }
+        .table.has-text-centered td:nth-child(2) {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="hero-bg" class="hero is-fullheight has-text-centered">
+        <div id="hero-bg-filter" class="hero-body">
+            <div class="container">
+                <h1 class="title has-text-white">Weather Station</h1>
+                <table id="table-bg" class="table is-fullwidth has-text-centered">
+                    <tbody>
+                        <tr>
+                            <td>DHT Temperature</td>
+                            <td><span id="dhttemp">%DHTTEMP%</span> &deg;C</td>
+                        </tr>
+                        <tr>
+                            <td>DHT Humidity</td>
+                            <td><span id="dhthumi">%DHTHUMI%</span> %</td>
+                        </tr>
+                        <tr>
+                            <td>BMP Temperature</td>
+                            <td><span id="bmptemp">%BMPTEMP%</span> &deg;C</td>
+                        </tr>
+                        <tr>
+                            <td>BMP Pressure</td>
+                            <td><span id="bmppres">%BMPPRES%</span> Pa</td>
+                        </tr>
+                        <tr>
+                            <td>POT</td>
+                            <td><span id="pot">%POT%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+    setInterval(() => {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = () => {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("dhttemp").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/dthtemp", true);
+        xhttp.send();
+    }, 10000 );
+    setInterval(() => {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("dthhumi").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/dthhumi", true);
+        xhttp.send();
+    }, 10000);
+    setInterval(() => {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("bmptemp").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/bmptemp", true);
+        xhttp.send();
+    }, 10000);
+    setInterval(() => {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("bmppres").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/bmppres", true);
+        xhttp.send();
+    }, 10000);
+    setInterval(() => {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("pot").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/pot", true);
+        xhttp.send();
+    }, 10000);
+    </script>
+</body>
+</html>
